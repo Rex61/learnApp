@@ -2,7 +2,6 @@ package ru.agasbek.learnapp.service;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
-import ru.agasbek.learnapp.model.LearnCard;
 import ru.agasbek.learnapp.model.LearnDictionary;
 import ru.agasbek.learnapp.repository.LearnDictionaryRepository;
 
@@ -35,13 +34,6 @@ public class LearnDictionaryServiceImpl implements LearnDictionaryService{
     @Override
     public LearnDictionary update(LearnDictionary dictionary) {
         return repository.save(dictionary);
-    }
-
-    @Override
-    public Optional<LearnDictionary> addCardById(Long id, LearnCard card) {
-        Optional<LearnDictionary> dict = repository.findById(id);
-        dict.map(d -> d.getCards().add(card));
-        return dict;
     }
 
     @Override

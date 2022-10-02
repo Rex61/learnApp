@@ -5,15 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.agasbek.learnapp.converter.LanguageDictionaryConverter;
 import ru.agasbek.learnapp.dto.LanguageDictionaryDTO;
-import ru.agasbek.learnapp.model.LanguageDictionary;
 import ru.agasbek.learnapp.service.LanguageDictionaryService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/dict/language")
+@RequestMapping("/api/v1/language/dictionary")
 public class LanguageDictionaryController {
     private final LanguageDictionaryService service;
 
@@ -31,8 +29,8 @@ public class LanguageDictionaryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LanguageDictionaryDTO> getById(@PathVariable long id) {
-        Optional<LanguageDictionary> card = service.getById(id);
-        return card.isPresent() ? ResponseEntity.ok(LanguageDictionaryConverter.toDTO(card.get()))
+        var dict = service.getById(id);
+        return dict.isPresent() ? ResponseEntity.ok(LanguageDictionaryConverter.toDTO(dict.get()))
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

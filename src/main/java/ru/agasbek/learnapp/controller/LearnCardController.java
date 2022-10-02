@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/card/learn")
+@RequestMapping("/api/v1")
 public class LearnCardController {
     private final LearnCardService service;
 
@@ -21,32 +21,32 @@ public class LearnCardController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<LearnCardDTO>> getAll() {
-        return ResponseEntity.ok(service.getAll()
+    @GetMapping("/learn/dictionary/{id}/cards")
+    public ResponseEntity<List<LearnCardDTO>> getAllByDictionaryId(@PathVariable long id) {
+        return ResponseEntity.ok(service.getAllByDictionaryId(id)
                 .stream()
                 .map(LearnCardConverter::toDTO)
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/learn/card/{id}")
     public ResponseEntity<LearnCardDTO> getById(@PathVariable long id) {
         Optional<LearnCard> card = service.getById(id);
         return card.isPresent() ? ResponseEntity.ok(LearnCardConverter.toDTO(card.get()))
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody LearnCardDTO dto) {
-        return ResponseEntity.ok(service.save(LearnCardConverter.toDomain(dto)));
+    @PostMapping("/learn/dictionary/{id}/cards")
+    public ResponseEntity<?> createCard(@RequestBody LearnCardDTO dto, @PathVariable long id) {
+        return ResponseEntity.ok(service.save(id, LearnCardConverter.toDomain(dto)));
     }
 
-    @PutMapping
+    @PutMapping("/learn/card")
     public ResponseEntity<?> update(@RequestBody LearnCardDTO dto) {
         return ResponseEntity.ok(service.update(LearnCardConverter.toDomain(dto)));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/learn/card/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.deleteById(id);
         return ResponseEntity.ok().build();

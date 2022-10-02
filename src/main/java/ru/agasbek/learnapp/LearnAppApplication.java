@@ -12,12 +12,4 @@ public class LearnAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(LearnAppApplication.class, args);
     }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf()
-                .disable()
-                .build();
-    }
 }

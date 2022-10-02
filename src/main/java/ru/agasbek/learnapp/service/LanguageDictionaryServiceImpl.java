@@ -2,7 +2,6 @@ package ru.agasbek.learnapp.service;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
-import ru.agasbek.learnapp.model.LanguageCard;
 import ru.agasbek.learnapp.model.LanguageDictionary;
 import ru.agasbek.learnapp.repository.LanguageDictionaryRepository;
 
@@ -35,13 +34,6 @@ public class LanguageDictionaryServiceImpl implements LanguageDictionaryService{
     @Override
     public LanguageDictionary update(LanguageDictionary dictionary) {
         return repository.save(dictionary);
-    }
-
-    @Override
-    public Optional<LanguageDictionary> addCardById(Long id, LanguageCard card) {
-        Optional<LanguageDictionary> dict = repository.findById(id);
-        dict.map(d -> d.getCards().add(card));
-        return dict;
     }
 
     @Override

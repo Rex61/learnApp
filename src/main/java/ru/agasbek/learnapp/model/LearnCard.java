@@ -1,11 +1,10 @@
 package ru.agasbek.learnapp.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,6 +14,10 @@ import java.time.LocalDateTime;
 public class LearnCard extends Card{
     private String word;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "dictionary_id", nullable = false)
+    private LearnDictionary dictionary;
 
     @Builder
     public LearnCard(long id, int numberOfRepetitions, LocalDateTime nextLearn, boolean needToLearn, String word, String description) {

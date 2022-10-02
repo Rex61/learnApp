@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/card/language")
+@RequestMapping("/api/v1")
 public class LanguageCardController {
     private final LanguageCardService service;
 
@@ -21,32 +21,32 @@ public class LanguageCardController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<LanguageCardDTO>> getAll() {
-        return ResponseEntity.ok(service.getAll()
+    @GetMapping("/language/dictionary/{id}/cards")
+    public ResponseEntity<List<LanguageCardDTO>> getAllByDictionaryId(@PathVariable long id) {
+        return ResponseEntity.ok(service.getAllByDictionaryId(id)
                 .stream()
                 .map(LanguageCardConverter::toDTO)
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/language/card/{id}")
     public ResponseEntity<LanguageCardDTO> getById(@PathVariable long id) {
         Optional<LanguageCard> card = service.getById(id);
         return card.isPresent() ? ResponseEntity.ok(LanguageCardConverter.toDTO(card.get()))
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody LanguageCardDTO dto) {
-        return ResponseEntity.ok(service.save(LanguageCardConverter.toDomain(dto)));
+    @PostMapping("/language/dictionary/{id}/cards")
+    public ResponseEntity<?> createCard(@RequestBody LanguageCardDTO dto, @PathVariable long id) {
+        return ResponseEntity.ok(service.save(id, LanguageCardConverter.toDomain(dto)));
     }
 
-    @PutMapping
+    @PutMapping("/language/card")
     public ResponseEntity<?> update(@RequestBody LanguageCardDTO dto) {
         return ResponseEntity.ok(service.update(LanguageCardConverter.toDomain(dto)));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/language/card/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.deleteById(id);
         return ResponseEntity.ok().build();

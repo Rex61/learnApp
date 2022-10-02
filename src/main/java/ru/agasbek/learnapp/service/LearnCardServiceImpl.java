@@ -4,6 +4,7 @@ import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 import ru.agasbek.learnapp.model.LearnCard;
 import ru.agasbek.learnapp.repository.LearnCardRepository;
+import ru.agasbek.learnapp.repository.LearnDictionaryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,14 +12,16 @@ import java.util.Optional;
 @Service
 public class LearnCardServiceImpl implements LearnCardService {
     private final LearnCardRepository repository;
+    private final LearnDictionaryRepository dictionaryRepository;
 
-    public LearnCardServiceImpl(LearnCardRepository repository) {
+    public LearnCardServiceImpl(LearnCardRepository repository, LearnDictionaryRepository dictionaryRepository) {
         this.repository = repository;
+        this.dictionaryRepository = dictionaryRepository;
     }
 
     @Override
-    public List<LearnCard> getAll() {
-        return IterableUtils.toList(repository.findAll());
+    public List<LearnCard> getAllByDictionaryId(long id) {
+        return repository.findByDictionaryId(id);
     }
 
     @Override
@@ -27,8 +30,11 @@ public class LearnCardServiceImpl implements LearnCardService {
     }
 
     @Override
-    public LearnCard save(LearnCard card) {
-        return repository.save(card);
+    public LearnCard save(long dictId, LearnCard card) {
+        return dictionaryRepository.findById(dictId).map(dict -> {
+            card.setDictionary(dict);
+            return repository.save(card);
+        }).orElseThrow();
     }
 
     @Override

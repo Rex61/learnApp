@@ -5,15 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.agasbek.learnapp.converter.LearnDictionaryConverter;
 import ru.agasbek.learnapp.dto.LearnDictionaryDTO;
-import ru.agasbek.learnapp.model.LearnDictionary;
 import ru.agasbek.learnapp.service.LearnDictionaryService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/dict/learn")
+@RequestMapping("/api/v1/learn/dictionary")
 public class LearnDictionaryController {
     private final LearnDictionaryService service;
 
@@ -31,8 +29,8 @@ public class LearnDictionaryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LearnDictionaryDTO> getById(@PathVariable long id) {
-        Optional<LearnDictionary> card = service.getById(id);
-        return card.isPresent() ? ResponseEntity.ok(LearnDictionaryConverter.toDTO(card.get()))
+        var dict = service.getById(id);
+        return dict.isPresent() ? ResponseEntity.ok(LearnDictionaryConverter.toDTO(dict.get()))
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

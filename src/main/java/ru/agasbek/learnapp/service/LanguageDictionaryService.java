@@ -1,6 +1,5 @@
 package ru.agasbek.learnapp.service;
 
-import ru.agasbek.learnapp.model.LanguageCard;
 import ru.agasbek.learnapp.model.LanguageDictionary;
 
 import java.util.List;
@@ -14,8 +13,6 @@ public interface LanguageDictionaryService {
     LanguageDictionary save(LanguageDictionary dictionary);
 
     LanguageDictionary update(LanguageDictionary dictionary);
-
-    Optional<LanguageDictionary> addCardById(Long id, LanguageCard card);
 
     void deleteById(Long id);
 }

@@ -2,9 +2,11 @@ package ru.agasbek.learnapp.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +18,5 @@ public class LearnDictionary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany
-    private List<LearnCard> cards;
     private LocalDateTime lastSeen;
 }

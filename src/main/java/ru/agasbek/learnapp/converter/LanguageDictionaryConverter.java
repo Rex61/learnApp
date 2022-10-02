@@ -7,7 +7,6 @@ public class LanguageDictionaryConverter {
     public static LanguageDictionary toDomain(LanguageDictionaryDTO dto) {
         return LanguageDictionary.builder()
                 .id(dto.getId())
-                .cards(dto.getCards())
                 .lastSeen(dto.getLastSeen())
                 .build();
     }
@@ -15,7 +14,6 @@ public class LanguageDictionaryConverter {
     public static LanguageDictionaryDTO toDTO(LanguageDictionary dict) {
         return LanguageDictionaryDTO.builder()
                 .id(dict.getId())
-                .cards(dict.getCards())
                 .lastSeen(dict.getLastSeen())
                 .build();
     }

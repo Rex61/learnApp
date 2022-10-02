@@ -4,6 +4,7 @@ import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 import ru.agasbek.learnapp.model.LanguageCard;
 import ru.agasbek.learnapp.repository.LanguageCardRepository;
+import ru.agasbek.learnapp.repository.LanguageDictionaryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,13 +12,15 @@ import java.util.Optional;
 @Service
 public class LanguageCardServiceImpl implements LanguageCardService{
     private final LanguageCardRepository repository;
+    private final LanguageDictionaryRepository dictionaryRepository;
 
-    public LanguageCardServiceImpl(LanguageCardRepository repository) {
+    public LanguageCardServiceImpl(LanguageCardRepository repository, LanguageDictionaryRepository dictionaryRepository) {
         this.repository = repository;
+        this.dictionaryRepository = dictionaryRepository;
     }
 
     @Override
-    public List<LanguageCard> getAll() {
+    public List<LanguageCard> getAllByDictionaryId(long dictId) {
         return IterableUtils.toList(repository.findAll());
     }
 
@@ -27,7 +30,7 @@ public class LanguageCardServiceImpl implements LanguageCardService{
     }
 
     @Override
-    public LanguageCard save(LanguageCard card) {
+    public LanguageCard save(long dictId, LanguageCard card) {
         return repository.save(card);
     }
 

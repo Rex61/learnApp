@@ -1,6 +1,5 @@
 package ru.agasbek.learnapp.service;
 
-import ru.agasbek.learnapp.model.LearnCard;
 import ru.agasbek.learnapp.model.LearnDictionary;
 
 import java.util.List;
@@ -14,8 +13,6 @@ public interface LearnDictionaryService {
     LearnDictionary save(LearnDictionary dictionary);
 
     LearnDictionary update(LearnDictionary dictionary);
-
-    Optional<LearnDictionary> addCardById(Long id, LearnCard card);
 
     void deleteById(Long id);
 }
