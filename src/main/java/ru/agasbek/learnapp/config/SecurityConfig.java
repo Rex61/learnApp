@@ -13,6 +13,8 @@ class SecurityConfig {
         http
                 .csrf()
                 .disable()
+                .cors()
+                .disable()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**")
                 .permitAll();
